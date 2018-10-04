@@ -7,18 +7,18 @@ from torch.nn import functional as F
 import torchvision
 from .attention import PAM_Module, CAM_Module
 
-__all__ = ['ResNet50DualAttention']
+__all__ = ['DenseNet121DualAttention']
 
 
-class ResNet50DualAttention(nn.Module):
+class DenseNet121DualAttention(nn.Module):
     def __init__(self, num_classes, loss={'xent'}, **kwargs):
-        super(ResNet50DualAttention, self).__init__()
+        super(DenseNet121DualAttention, self).__init__()
         self.loss = loss
-        resnet50 = torchvision.models.resnet50(pretrained=True)
-        self.base = nn.Sequential(*list(resnet50.children())[:-2])
-        self.danet_head = DANetHead(2048, 2048, nn.BatchNorm2d)
-        self.classifier = nn.Linear(2048, num_classes)
-        self.feat_dim = 2048
+        densenet121 = torchvision.models.densenet121(pretrained=True)
+        self.base = densenet121.features
+        self.danet_head = DANetHead(1024, 1024, nn.BatchNorm2d)
+        self.classifier = nn.Linear(1024, num_classes)
+        self.feat_dim = 1024
 
     def forward(self, x):
         x = self.base(x)

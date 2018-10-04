@@ -13,6 +13,8 @@ from .xception import *
 from .inceptionv4 import *
 from .nasnet import *
 from .inceptionresnetv2 import *
+from .resnet_dual_attention import *
+from .densenet_dual_attention import *
 
 
 __model_factory = {
@@ -34,6 +36,8 @@ __model_factory = {
     'inceptionresnetv2': InceptionResNetV2,
     'mudeep': MuDeep,
     'hacnn': HACNN,
+    'resnet50_da': ResNet50DualAttention,
+    'densenet121_da': DenseNet121DualAttention,
 }
 
 

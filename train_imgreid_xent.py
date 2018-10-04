@@ -109,6 +109,7 @@ best_rank1 = -np.inf
 
 
 def main():
+    global best_rank1
     torch.manual_seed(args.seed)
     if not args.use_avai_gpus: os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_devices
     use_gpu = torch.cuda.is_available()
@@ -238,7 +239,7 @@ def main():
         train_time += round(time.time() - start_train_time)
         
         scheduler.step()
-        
+
         if (epoch + 1) > args.start_eval and args.eval_step > 0 and (epoch + 1) % args.eval_step == 0 or (epoch + 1) == args.max_epoch:
             print("==> Test")
             rank1 = test(model, queryloader, galleryloader, use_gpu)
