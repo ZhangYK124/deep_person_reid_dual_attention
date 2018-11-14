@@ -15,6 +15,7 @@ from .nasnet import *
 from .inceptionresnetv2 import *
 from .resnet_dual_attention import *
 from .densenet_dual_attention import *
+from .densenet_pam import *
 
 
 __model_factory = {
@@ -38,6 +39,7 @@ __model_factory = {
     'hacnn': HACNN,
     'resnet50_da': ResNet50DualAttention,
     'densenet121_da': DenseNet121DualAttention,
+    'densenet121_pam': DenseNet121PAM,
 }
 
 

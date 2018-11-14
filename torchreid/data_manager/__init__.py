@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+from .market1501_pose import Market1501Pose
 from .market1501 import Market1501
 from .cuhk03 import CUHK03
 from .dukemtmcreid import DukeMTMCreID
@@ -21,6 +22,7 @@ from .dukemtmcvidreid import DukeMTMCVidReID
 
 __imgreid_factory = {
     'market1501': Market1501,
+    'market1501_pose': Market1501Pose,
     'cuhk03': CUHK03,
     'dukemtmcreid': DukeMTMCreID,
     'msmt17': MSMT17,

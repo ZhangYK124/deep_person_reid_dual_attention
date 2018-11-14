@@ -30,9 +30,10 @@ def read_image(img_path):
 
 class ImageDataset(Dataset):
     """Image Person ReID Dataset"""
-    def __init__(self, dataset, transform=None):
+    def __init__(self, dataset, transform=None, pose_label=None):
         self.dataset = dataset
         self.transform = transform
+        self.pose_label = pose_label
 
     def __len__(self):
         return len(self.dataset)
@@ -43,7 +44,11 @@ class ImageDataset(Dataset):
         
         if self.transform is not None:
             img = self.transform(img)
-        
+
+        if self.pose_label is not None:
+            p = self.pose_label[osp.basename(img_path)]
+            p = np.array(p, dtype=np.float32)
+            return img, pid, camid, p
         return img, pid, camid
 
 

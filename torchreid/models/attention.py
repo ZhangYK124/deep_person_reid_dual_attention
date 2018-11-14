@@ -45,10 +45,10 @@ class PAM_Module(Module):
         proj_value = self.value_conv(x).view(m_batchsize, -1, width*height)
 
         out = torch.bmm(proj_value, attention.permute(0, 2, 1))
-        out = out.view(m_batchsize, C, height, width)
+        attention_mask = out.view(m_batchsize, C, height, width)
 
-        out = self.gamma*out + x
-        return out
+        out = self.gamma * attention_mask + x
+        return out, attention_mask
 
 
 class CAM_Module(Module):
