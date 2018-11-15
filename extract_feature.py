@@ -23,8 +23,14 @@ def extractor(model, dataloader):
         for batch, sample in enumerate(tqdm(dataloader)):
             names, images = sample['name'], sample['img']
 
-            ff = model(images.cuda()).data.cpu()
-            ff = ff + model(fliplr(images).cuda()).data.cpu()
+            model_outputs = model(images.cuda())
+            if type(model_outputs) is tuple:
+                ff = model_outputs[0].data.cpu()
+                ff = ff + model(fliplr(images).cuda())[0].data.cpu()
+            else:
+                ff = model_outputs.data.cpu()
+                ff = ff + model(fliplr(images).cuda()).data.cpu()
+
             ff = ff.div(torch.norm(ff, p=2, dim=1, keepdim=True).expand_as(ff))
 
             test_names = test_names + names
@@ -34,7 +40,7 @@ def extractor(model, dataloader):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--snap_shot', type=str, default='saved-models/densenet121_xent_market1501.pth.tar')
+    parser.add_argument('--snap-shot', type=str, default='saved-models/densenet121_xent_market1501.pth.tar')
     parser.add_argument('--arch', type=str, default='densenet121')
     parser.add_argument('--dataset-path', type=str, default='data/valSet')
     parser.add_argument('--height', type=int, default=256,
